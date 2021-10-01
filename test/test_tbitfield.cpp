@@ -272,3 +272,106 @@ TEST(TBitField, bitfields_with_different_bits_are_not_equal)
 
     EXPECT_NE(bf1, bf2);
 }
+// Мои тесты
+//№1
+TEST(TBitField, invert_plus_or_operator_on_different_size_bitfield)
+{
+    const uint firstSze = 5, secondSize = 6;
+    TBitField firstBf(firstSze), negFirstBf(firstSze), secondBf(secondSize), testBf(secondSize);
+    // firstBf = 10001
+    firstBf.setBit(0);
+    firstBf.setBit(4);
+    negFirstBf = ~firstBf;
+    // negFirstBf = 01110
+
+    // secondBf = 110010
+    secondBf.setBit(1);
+    secondBf.setBit(4);
+    secondBf.setBit(5);
+
+    // testBf = 111110
+    testBf.setBit(1);
+    testBf.setBit(2);
+    testBf.setBit(3);
+    testBf.setBit(4);
+    testBf.setBit(5);
+
+    EXPECT_EQ(secondBf | negFirstBf, testBf);
+}
+//№2
+TEST(TBitField, or_operation_plus_or_operator_on_different_size_bitfield)
+{
+    const uint firstSze = 3, secondSize = 2, thirdSize = 4;
+    TBitField firstBf(firstSze),secondBf(secondSize), thirdBf(thirdSize), testBf(thirdSize);
+    // firstBf = 010
+    firstBf.setBit(1);
+
+    // secondBf = 01
+    secondBf.setBit(0);
+
+    // thirdBf = 1010
+    thirdBf.setBit(1);
+    thirdBf.setBit(3);
+
+    // testBf = 1011
+    testBf.setBit(0);
+    testBf.setBit(1);
+    testBf.setBit(3);
+   
+    EXPECT_EQ( firstBf | secondBf | thirdBf, testBf);
+}
+//№3
+TEST(TBitField, throws_when_create_bitfield_with_negative_length)
+{
+    ASSERT_ANY_THROW(TBitField bf(-19););
+    ASSERT_ANY_THROW(TBitField bf(-84););
+}
+//№4
+TEST(TBitField, can_assign_itself)
+{
+    const size_t size = 10;
+    TBitField bf(size);
+    for (size_t i = 0; i < size; i++)
+        bf.setBit(i);
+    TBitField testBf(bf);
+    bf = bf;
+    EXPECT_EQ(testBf, bf);
+}
+//№5
+TEST(TBitField, compare_bitfield_with_inverted_itself)
+{
+    const size_t size = 5;
+    TBitField bf(size), negBf(size), expNegBf(size);
+    // bf = 11001
+    bf.setBit(0);
+    bf.setBit(3);
+    bf.setBit(4);
+    // bf = 00110
+    negBf = ~bf;
+    expNegBf.setBit(1);
+    expNegBf.setBit(2);
+
+    EXPECT_EQ(expNegBf, negBf);
+    EXPECT_EQ(false, bf==negBf);
+}
+//№6
+TEST(TBitField, can_clear_bit_twice)
+{
+    TBitField bf(1);
+    uint bitIdx = 0;
+
+    bf.setBit(bitIdx);
+    EXPECT_NE(false, bf.getBit(bitIdx));
+
+    bf.clrBit(bitIdx);
+    EXPECT_EQ(false, bf.getBit(bitIdx));
+
+    bf.clrBit(bitIdx);
+    EXPECT_EQ(false, bf.getBit(bitIdx));
+}
+
+
+
+
+
+

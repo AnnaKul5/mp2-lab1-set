@@ -313,3 +313,91 @@ TEST(TSet, testCoutInsClearPlusMinus)
     set1 = set1 - 1;
     EXPECT_EQ(expSet, set1 + set + set1);
 }
+// Мои тесты
+//№1
+TEST(TSet, throws_when_create_set_with_negative_maxPower)
+{
+    ASSERT_ANY_THROW(TSet s(-19););
+    ASSERT_ANY_THROW(TSet s(-84););
+}
+//№2
+TEST(TSet, can_delete_existing_element_twice)
+{
+    const size_t size = 10;
+    const uint k = 6;
+    TSet set(size);
+
+    set.insElem(k);
+    EXPECT_GT(set.isMember(k), false);
+
+    set.delElem(k);
+    EXPECT_EQ(set.isMember(k), false);
+
+    set.delElem(k);
+    EXPECT_EQ(set.isMember(k), false);
+}
+//№3
+TEST(TSet, can_create_set_with_positive_maxPower)
+{
+    ASSERT_NO_THROW(TSet set(100));
+}
+
+//№4
+TEST(TSet, can_intersect_three_sets_of_equal_size)
+{
+    const size_t size = 10;
+    TSet set1(size), set2(size), set3(size), set4(size), expSet(size);
+    // set1 = {1, 2, 4, 7}
+    set1.insElem(1);
+    set1.insElem(2);
+    set1.insElem(4);
+    set1.insElem(7);
+    // set2 = {0, 1, 2, 4, 6, 7, 9}
+    set2.insElem(0);
+    set2.insElem(1);
+    set2.insElem(2);
+    set2.insElem(4);
+    set2.insElem(6);
+    set2.insElem(7);
+    set2.insElem(9);
+    // set3 = {0, 1, 2, 3, 4}
+    set3.insElem(0);
+    set3.insElem(1);
+    set3.insElem(2);
+    set3.insElem(3);
+    set3.insElem(4);
+    
+    set4 = set1 * set2 * set3;
+    // expSet = {1, 2, 4}
+    expSet.insElem(1);
+    expSet.insElem(2);
+    expSet.insElem(4);
+
+    EXPECT_EQ(expSet, set4);
+}
+//№5
+TEST(TSet, check_size_changes_and_result_of_the_intersect_of_two_sets_of_non_equal_size)
+{
+    const size_t size1 = 8, size2 = 6;
+    TSet set1(size1), set2(size2), set3(size1), expSet(size1);
+    // set1 = {0, 2, 5, 7}
+    set1.insElem(0);
+    set1.insElem(2);
+    set1.insElem(5);
+    set1.insElem(7);
+
+    // set2 = {0, 1, 2, 5}
+    set2.insElem(0);
+    set2.insElem(1);
+    set2.insElem(2);
+    set2.insElem(5);
+    set3 = set1 * set2;
+
+    // expSet = {0, 2, 5}
+    expSet.insElem(0);
+    expSet.insElem(2);
+    expSet.insElem(5);
+
+    EXPECT_EQ(expSet, set3);
+    EXPECT_EQ(size1, set3.getMaxPower());
+}
