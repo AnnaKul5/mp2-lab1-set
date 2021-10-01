@@ -136,8 +136,10 @@ std::ostream& operator<<(std::ostream &ostr, const TSet &s) // вывод
 {
     for (int i = 0; i < s.maxPower; i++)
     {
-        if(s.isMember(i))
+        if (s.isMember(i))
+        {
             ostr << i << ' ';
+        }
     }
     return ostr;
 }

@@ -352,6 +352,7 @@ TEST(TSet, can_intersect_three_sets_of_equal_size)
     set1.insElem(2);
     set1.insElem(4);
     set1.insElem(7);
+
     // set2 = {0, 1, 2, 4, 6, 7, 9}
     set2.insElem(0);
     set2.insElem(1);
@@ -360,6 +361,7 @@ TEST(TSet, can_intersect_three_sets_of_equal_size)
     set2.insElem(6);
     set2.insElem(7);
     set2.insElem(9);
+
     // set3 = {0, 1, 2, 3, 4}
     set3.insElem(0);
     set3.insElem(1);
