@@ -9,7 +9,6 @@
 #include <iostream>
 #include <algorithm>
 #include "tbitfield.h"
-
 TBitField::TBitField(size_t len)
 {
     if (len < 0)
@@ -61,7 +60,7 @@ elType TBitField::getMask(const size_t n) const // битовая маска д�
     {
         throw n;
     }
-    return (1 << (n % sizeof(size_t)));
+    return elType(1) << (n % sizeof(size_t));
 }
 
 // доступ к битам битового поля
@@ -149,13 +148,6 @@ bool TBitField::operator==(const TBitField &bf) const // сравнение
                 return false;
             }
         }
-        for (int i = (memLen - 1) * sizeof(elType); i < bitLen; i++)
-        {
-            if (getBit(i) != bf.getBit(i))
-            {
-                return false;
-            }
-        }
     }
     return true;
 }
@@ -168,16 +160,9 @@ bool TBitField::operator!=(const TBitField &bf) const // сравнение
         {
             return true;
         }
-        for (int i = 0; i < memLen ; i++)
+        for (int i = 0; i < memLen; i++)
         {
             if (pMem[i] != bf.pMem[i])
-            {
-                return true;
-            }
-        }
-        for (int i = (memLen - 1) * sizeof(elType); i < bitLen; i++)
-        {
-            if (getBit(i) != bf.getBit(i))
             {
                 return true;
             }
@@ -265,25 +250,9 @@ TBitField::~TBitField()
 // ввод/вывод
 std::istream &operator>>(std::istream &istr, TBitField &bf) // ввод
 {
-    char val;
-    for (int i = 0; i < bf.bitLen; i++)
+    for (int i = 0; i < bf.memLen; ++i)
     {
-        istr >> val;
-        if (val == '0')
-        {
-            bf.clrBit(i);
-        }
-        else
-        {
-            if (val == '1')
-            {
-                bf.setBit(i);
-            }
-            else
-            {
-                return istr;
-            }
-        }
+        istr >> bf.pMem[i];
     }
     return istr;
 }
