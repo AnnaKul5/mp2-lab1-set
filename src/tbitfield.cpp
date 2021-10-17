@@ -80,7 +80,7 @@ size_t TBitField::getNumBytes() const // получить количество �
 
 void TBitField::setBit(const size_t n) // установить бит
 {
-    if (n < 0 || n > bitLen)
+    if (n < 0 || n >= bitLen)
     {
         throw n;
     }
@@ -91,7 +91,7 @@ void TBitField::setBit(const size_t n) // установить бит
 
 void TBitField::clrBit(const size_t n) // очистить бит
 {
-    if (n < 0 || n > bitLen)
+    if (n < 0 || n >= bitLen)
     {
         throw n;
     }
