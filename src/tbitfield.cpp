@@ -188,16 +188,14 @@ TBitField TBitField::operator|(const TBitField& bf) // операция "или"
     {
         for (int i = 0; i < max_size; i++)
         {
-            field.pMem[i] = bf.pMem[i];
-            field.pMem[i] |= pMem[i];
+            field.pMem[i] = bf.pMem[i] | pMem[i];
         }
     }
     else
     {
         for (int i = 0; i < max_size; i++)
         {
-            field.pMem[i] = pMem[i];
-            field.pMem[i] |= bf.pMem[i];
+            field.pMem[i] = pMem[i] | bf.pMem[i];
         }
     }
     return field;
@@ -216,16 +214,14 @@ TBitField TBitField::operator&(const TBitField &bf) // операция "и"
     {
         for (int i = 0; i < max_size; i++)
         {
-            field.pMem[i] = bf.pMem[i];
-            field.pMem[i] &= pMem[i];
+            field.pMem[i] = bf.pMem[i] & pMem[i];
         }
     }
     else
     {
         for (int i = 0; i < max_size; i++)
         {
-            field.pMem[i] = pMem[i];
-            field.pMem[i] &= bf.pMem[i];
+            field.pMem[i] = pMem[i] & bf.pMem[i];
         }
     }
     return field;
